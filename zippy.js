@@ -67,7 +67,7 @@ exports.DLFunc = async (bot, blu, u, fn, cb= () => { }) => {
             console.log(size)
             //let msg = blu.reply('Start Downloading File...')
             console.log('☕  ' + ('Start Downloading File : ' + filename))
-            const file = await _fs.createWriteStream(dir+fn || dir+filename)
+            const file = await _fs.createWriteStream(fn != null? dir+fn : dir+filename)
             try {
               await res.pipe(file)
             } catch (e) {console.log(e)}
@@ -102,11 +102,11 @@ exports.DLFunc = async (bot, blu, u, fn, cb= () => { }) => {
                 console.log('✅  ' + ('Success Download File : ' + filename))
                 console.log('Size: '+clacSize(currentSize))
                 bot.telegram.editMessageText(msg.chat.id, msg.message_id,'',`_Uploading..._`,{parse_mode:'markdown'})
-                bot.telegram.sendChatAction(blu.chat.id,'upload_video')
-                blu.replyWithVideo({source: dir+fn || dir+filename}, {caption: `${fn || filename}\n${''/*clacSize(currentSize)*/}`}).then(a=>{
+                blu.replyWithVideo({source: fn != null? dir+fn : dir+filename}, {caption: `${fn || filename}\n${''/*clacSize(currentSize)*/}`}).then(a=>{
                   bot.telegram.copyMessage('@lifenotdaijobu',a.chat.id,a.message_id)
                   bot.telegram.editMessageText(msg.chat.id, msg.message_id,'',`_✅ Done_`,{parse_mode:'markdown'})
                   console.log(a)})
+                bot.telegram.sendChatAction(blu.chat.id,'upload_video')
                 cb(fn)
             })
             res.on('error', _ => {
