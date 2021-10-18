@@ -87,8 +87,8 @@ exports.DLFunc = async (bot, blu, u, fn, cb= () => { }) => {
                 //console.log(ed)
                 //edt++
                 if(edt == 1 || size == currentSize){
-                  console.log(/*clacSize(currentSize)*/c.length)
-                  bot.telegram.editMessageText(msg.chat.id, msg.message_id, '', `_Progress: ${clacSize(currentSize)} of ${clacSize(size)} (${toPersen(currentSize, size)})_`,{parse_mode: 'markdown'})
+                  console.log(clacSize(currentSize))
+                  bot.telegram.editMessageText(msg.chat.id, msg.message_id, '', `_Progress: ${clacSize(currentSize)} of ${clacSize(size)} (${toPersen(currentSize, size)})\n⬇️${clacSize(c.length)}_`,{parse_mode: 'markdown'})
                 }
                 edt++
                 /*loadbar.increment(c.length, {
