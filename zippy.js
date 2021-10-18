@@ -57,7 +57,7 @@ exports.DLFunc = async (bot, blu, u, fn, cb= () => { }) => {
             console.log('🔁  ' + ('Server Download Error, Try To Get New Link...'))
             exports.DLFunc(bot, blu, u, fn, cb)
         } else {
-            let dir = './downloads/'
+            //let dir = './downloads/'
             console.log('✅  ' + ('Server Response'))
             //msg.then(a=>bot.telegram.deleteMessage(a.chat.id,a.message_id))
             const size = parseInt(res.headers['content-length'], 10),
@@ -67,7 +67,7 @@ exports.DLFunc = async (bot, blu, u, fn, cb= () => { }) => {
             console.log(size)
             //let msg = blu.reply('Start Downloading File...')
             console.log('☕  ' + ('Start Downloading File : ' + filename))
-            const file = await _fs.createWriteStream(dir+fn || filename)
+            const file = await _fs.createWriteStream(fn || filename)
             try {
               await res.pipe(file)
             } catch (e) {console.log(e)}
@@ -87,7 +87,7 @@ exports.DLFunc = async (bot, blu, u, fn, cb= () => { }) => {
                 //console.log(ed)
                 //edt++
                 if(edt == 1 || size == currentSize){
-                  console.log(clacSize(currentSize))
+                  console.log(/*clacSize(currentSize)*/c.length)
                   bot.telegram.editMessageText(msg.chat.id, msg.message_id, '', `_Progress: ${clacSize(currentSize)} of ${clacSize(size)} (${toPersen(currentSize, size)})_`,{parse_mode: 'markdown'})
                 }
                 edt++
@@ -103,7 +103,7 @@ exports.DLFunc = async (bot, blu, u, fn, cb= () => { }) => {
                 console.log('Size: '+clacSize(currentSize))
                 bot.telegram.editMessageText(msg.chat.id, msg.message_id,'',`_Uploading..._`,{parse_mode:'markdown'})
                 bot.telegram.sendChatAction(blu.chat.id,'upload_video')
-                blu.replyWithVideo({source: dir+fn || filename}, {caption: `${fn || filename}\n${''/*clacSize(currentSize)*/}`}).then(a=>{
+                blu.replyWithVideo({source: fn || filename}, {caption: `${fn || filename}\n${''/*clacSize(currentSize)*/}`}).then(a=>{
                   bot.telegram.copyMessage('@lifenotdaijobu',a.chat.id,a.message_id)
                   bot.telegram.editMessageText(msg.chat.id, msg.message_id,'',`_✅ Done_`,{parse_mode:'markdown'})
                   console.log(a)})
