@@ -49,6 +49,12 @@ bot.on('message', async (blu, next) => {
   if(body.startsWith('>') && isOwner){
     await evalJs(blu, body.slice(1))
   }
+  if(body.startsWith('=>') && isOwner){
+    await execShell(body.slice(2))
+    .then(async res=>{
+      await blu.reply(res, {reply_to_message_id: blu.message.message_id})
+    }).catch(e=>blu.reply(e, {reply_to_message_id: blu.message.message_id}))
+  }
 })
 
 bot.telegram.setWebhook(`${URL}/bot${TOKEN}`);
