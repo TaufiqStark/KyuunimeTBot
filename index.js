@@ -43,7 +43,7 @@ function execShell(command){
   });
 }
 bot.start(ctx=>ctx.reply(`Hai ${ctx.from.first_name}`))
-bot.on('message', async (blu, next) => {
+bot.on('messagee', async (blu, next) => {
   isOwner = blu.from.id == '1453003802'
   body = blu.message.text || ''
   if(body.startsWith('>') && isOwner){
