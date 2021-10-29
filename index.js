@@ -54,7 +54,6 @@ function execShell(command){
 }
 bot.start( async ctx=>{
 dbtg = await axios('https://db.kyuki.tk/tg').then(res=>res.data)
-console.log(dbtg)
 rid = ctx.message.text.match(/\/start (.+)/i)
 if(rid == null) return await ctx.reply(`Hai ${ctx.from.first_name}`)
 file = rid[1].startsWith('v') ? dbtg.video[rid[1]] : dbtg
