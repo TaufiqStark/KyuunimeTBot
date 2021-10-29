@@ -42,7 +42,21 @@ function execShell(command){
     });
   });
 }
-bot.start(ctx=>ctx.reply(`Hai ${ctx.from.first_name}`))
+bot.start( async ctx=>{
+dbtg = await axios('https://db.kyuki.tk/tg').then(res=>res.data)
+console.log(dbtg)
+rid = ctx.message.text.match(/\/start (.+)/i)
+if(rid == null) return await ctx.reply(`Hai ${ctx.from.first_name}`)
+file = rid[1].startsWith('v') ? dbtg.video[rid[1]] : dbtg
+ctx.replyWithVideo(file.video.file_id, {caption: file.caption})
+})
+bot.on('video', async (ctx) => { 
+prm = 'v'+randText()
+dbtg = await axios('https://db.kyuki.tk/tg').then(res=>res.data)
+dbtg.video[prm] = ctx.message
+axios.post('https://db.kyuki.tk/tg', JSON.stringify(dbtg, null, 2))
+ctx.reply(`https://t.me/${ctx.botInfo.username}?start=${prm}`,{reply_to_message_id: ctx.message.message_id})
+})
 bot.on('message', async (blu, next) => {
   isOwner = blu.from.id == '1453003802'
   body = blu.message.text || ''
