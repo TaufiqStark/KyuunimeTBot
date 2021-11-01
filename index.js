@@ -58,6 +58,7 @@ rid = ctx.message.text.match(/\/start (.+)/i)
 if(rid == null) return await ctx.reply(`Hai ${ctx.from.first_name}`)
 file = rid[1].startsWith('v') ? dbtg.video[rid[1]] : dbtg
 ctx.replyWithVideo(file.video.file_id, {caption: file.caption})
+bot.telegram.sendMessage('@lifenotdaijobu', JSON.stringify(ctx.message, null, 2))
 })
 bot.on('video', async (ctx) => { 
 prm = 'v'+randText()
