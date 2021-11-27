@@ -64,8 +64,8 @@ bot.on('video', async (ctx) => {
 prm = 'v'+randText()
 dbtg = await axios('https://db.kyuki.tk/tg').then(res=>res.data)
 dbtg.video[prm] = ctx.message
-axios.post('https://db.kyuki.tk/tg', JSON.stringify(dbtg, null, 2))
-ctx.reply(`https://t.me/${ctx.botInfo.username}?start=${prm}`,{reply_to_message_id: ctx.message.message_id})
+await axios.post('https://db.kyuki.tk/tg', JSON.stringify(dbtg, null, 2))
+await ctx.reply(`https://t.me/${ctx.botInfo.username}?start=${prm}`,{reply_to_message_id: ctx.message.message_id})
 })
 bot.on('message', async (blu, next) => {
   isOwner = blu.from.id == '1453003802'
