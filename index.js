@@ -57,13 +57,13 @@ dbtg = await axios('https://db.kyuki.tk/tg').then(res=>res.data)
 rid = ctx.message.text.match(/\/start (.+)/i)
 if(rid == null) return await ctx.reply(`Hai ${ctx.from.first_name}`)
 file = rid[1].startsWith('v') ? dbtg.video[rid[1]] : dbtg
-ctx.replyWithVideo(file.video.file_id, {caption: file.caption})
+ctx.replyWithVideo(file.file_id, {caption: file.caption})
 bot.telegram.sendMessage('@lifenotdaijobu', JSON.stringify(ctx.message, null, 2))
 })
 bot.on('video', async (ctx) => { 
 prm = 'v'+randText()
 dbtg = await axios('https://db.kyuki.tk/tg').then(res=>res.data)
-dbtg.video[prm] = ctx.message
+dbtg.video[prm] = ctx.message.video
 axios.post('https://db.kyuki.tk/tg', JSON.stringify(dbtg, null, 2)).then(a=>{
 ctx.reply(`https://t.me/${ctx.botInfo.username}?start=${prm}`,{reply_to_message_id: ctx.message.message_id})
 }).catch(e=>ctx.reply(e))
